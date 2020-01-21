@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-parent</artifactId>
+	<version>2.1.8.RELEASE</version>
+	<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+  <groupId>xh.lhq.st</groupId>
+  <artifactId>mywj</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>mywj</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+ 	<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version><!-- 解决maven首行报错 -->
+    <failOnMissingWebXml>false</failOnMissingWebXml>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+	  <groupId>org.springframework.boot</groupId>
+	  <artifactId>spring-boot-starter-web</artifactId>
+	   <!--忽略内嵌tomcat，打包部署到tomcat。注*本地运行的时候要把这一段忽略引入个注释掉，要不然项目启动不了-->
+   	 <!--  <exclusions>
+	      <exclusion>
+	         <groupId>org.springframework.boot</groupId>
+	         <artifactId>spring-boot-starter-tomcat</artifactId>
+	      </exclusion>
+   </exclusions>  -->
+	</dependency>
+	
+	<!-- JSTL for JSP  spring boot搭建web项目，跳转到jsp一定要添加下面的jar包，否则出现跳转的时候，变成下载的功能，保存该页面-->
+    <dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>jstl</artifactId>
+	</dependency>
+	
+	<dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+       <!-- provided表明该包只在编译和测试的时候用 因为tomcat本身也有servlet-api.jar包，结果会产生冲突！ -->
+      <scope>provided</scope>
+    </dependency>
+
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-tomcat</artifactId>
+		<!-- 部署外部tomcat排除掉内置的tomcat -->
+		<scope>provided</scope>
+	</dependency>
+	<!-- SpringBoot 外部tomcat支持,整合jsp必须要 -->	
+	<dependency>
+		<groupId>org.apache.tomcat.embed</groupId>
+		<artifactId>tomcat-embed-jasper</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	
+	  <!--  <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-legacy</artifactId>
+        <version>2.0.0.RELEASE</version>
+    </dependency>  -->
+
+	<!-- <dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-thymeleaf</artifactId>
+	</dependency> -->
+
+  </dependencies>
+  
+  	<build>
+    <!-- 应与application.properties(或application.yml)中context-path保持一致 -->
+    <finalName>mywj</finalName>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <version>1.4.2.RELEASE</version>
+           <!--  配置程序入口，打包到tomcat部署用到 -->
+			<configuration>
+				<mainClass>xh.lhq.st.mywj.App</mainClass>
+			</configuration>
+        </plugin>
+    </plugins>
+    </build>
+</project>
